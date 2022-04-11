@@ -1,6 +1,7 @@
 #include "FileSumThreds.h"
 
 int globalSum = 0;
+pthread_mutex_t lock;
 int main(int argc, char* argv[]){
     if (argc < 3)
     {
@@ -32,7 +33,10 @@ void* SmOfFiles(void* arg){
     {
         sum += temp;
     }
+    pthread_mutex_lock(&lock);
     globalSum += sum;
+    pthread_mutex_unlock(&lock);
+    
     printf("Sum is: %d \n", sum);
     
     
